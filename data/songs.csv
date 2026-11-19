@@ -1,48 +1,48 @@
 id,title,artist,album,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,artist_monthly_listeners,release_year,duration_min,mood_tags,explicit
-1,Billie Jean,Michael Jackson,Thriller,pop,moody,0.65,117,0.7,0.92,0.02,89563979,1982,4.9,smooth|paranoid|groovy,0
-2,Beat It,Michael Jackson,Thriller,rock,intense,0.82,139,0.75,0.7,0.03,89563979,1982,4.32,driving|powerful|catchy,0
-3,Purple Rain,Prince,Purple Rain,rock,emotional,0.5,113,0.2,0.35,0.2,24860802,1984,8.67,epic|emotional|soaring,0
-4,When Doves Cry,Prince,Purple Rain,pop,moody,0.65,127,0.6,0.7,0.05,24860802,1984,5.87,experimental|moody|funky,0
-5,Kiss,Prince,Parade,funk,playful,0.7,112,0.85,0.8,0.2,24860802,1986,3.63,funky|minimal|playful,0
-6,HUMBLE.,Kendrick Lamar,DAMN.,hip-hop,confident,0.62,150,0.42,0.91,0.0,68312603,2017,2.95,powerful|swagger|minimal,1
-7,DNA.,Kendrick Lamar,DAMN.,hip-hop,intense,0.85,140,0.4,0.64,0.0,68312603,2017,3.08,aggressive|powerful|swagger,1
-8,Alright,Kendrick Lamar,To Pimp a Butterfly,hip-hop,hopeful,0.6,110,0.5,0.77,0.1,68312603,2015,3.65,uplifting|powerful|bouncy,1
-9,Money Trees,Kendrick Lamar,"good kid, m.A.A.d city",hip-hop,dreamy,0.55,144,0.35,0.7,0.1,68312603,2012,6.43,dreamy|nostalgic|hazy,1
-10,Thuggin',Freddie Gibbs,Piñata,hip-hop,gritty,0.65,95,0.45,0.7,0.1,3841025,2014,3.77,gritty|soulful|laid-back,1
-11,1985,Freddie Gibbs,Alfredo,hip-hop,relaxed,0.55,90,0.5,0.65,0.1,3841025,2020,2.53,laid-back|gritty|smooth,1
-12,Scottie Beam,Freddie Gibbs,Alfredo,hip-hop,confident,0.6,85,0.45,0.7,0.05,3841025,2020,4.07,smooth|swagger|gritty,1
-13,Master of Puppets,Metallica,Master of Puppets,metal,angry,0.92,212,0.3,0.35,0.0,33324219,1986,8.6,aggressive|powerful|epic,0
-14,Smells Like Teen Spirit,Nirvana,Nevermind,rock,angry,0.9,117,0.72,0.5,0.0,38774587,1991,5.02,aggressive|catchy|driving,0
-15,Hurt,Johnny Cash,American IV: The Man Comes Around,country,sad,0.3,90,0.1,0.35,0.75,12169488,2002,3.63,heartfelt|somber|stripped,0
-16,Ain't No Sunshine,Bill Withers,Just As I Am,soul,sad,0.3,78,0.35,0.55,0.72,17851353,1971,2.07,heartfelt|soulful|stripped,0
-17,One More Time,Daft Punk,Discovery,electronic,euphoric,0.85,123,0.78,0.82,0.02,27813037,2001,5.33,euphoric|danceable|catchy,0
-18,"Harder, Better, Faster, Stronger",Daft Punk,Discovery,electronic,intense,0.8,123,0.5,0.75,0.02,27813037,2001,3.75,driving|robotic|danceable,0
-19,Human Nature,Michael Jackson,Thriller,pop,chill,0.45,93,0.55,0.75,0.3,89563979,1982,4.08,smooth|dreamy|warm,0
-20,Let's Go Crazy,Prince,Purple Rain,rock,euphoric,0.88,160,0.75,0.5,0.04,24860802,1984,4.65,driving|powerful|catchy,0
-21,Hey Ya!,OutKast,Speakerboxxx/The Love Below,pop,playful,0.87,159,0.96,0.73,0.06,27732114,2003,3.92,upbeat|catchy|quirky,0
-22,The Way You Move,OutKast,Speakerboxxx/The Love Below,hip-hop,smooth,0.7,130,0.75,0.85,0.1,27732114,2003,3.9,smooth|groovy|danceable,0
-23,Yellow,Coldplay,Parachutes,rock,hopeful,0.66,173,0.29,0.43,0.0,90403426,2000,4.48,anthemic|warm|soaring,0
-24,Trouble,Coldplay,Parachutes,rock,sad,0.5,144,0.22,0.45,0.4,90403426,2000,4.52,heartfelt|somber|stripped,0
-25,Formation,Beyoncé,Lemonade,r&b,confident,0.62,123,0.4,0.77,0.03,61248074,2016,3.43,powerful|swagger|bouncy,1
-26,Hold Up,Beyoncé,Lemonade,r&b,playful,0.55,85,0.65,0.8,0.05,61248074,2016,3.68,smooth|bouncy|sassy,0
-27,Redbone,Childish Gambino,"Awaken, My Love!",funk,romantic,0.35,81,0.59,0.74,0.2,32972133,2016,5.45,smooth|funky|falsetto,0
-28,3005,Childish Gambino,Because the Internet,hip-hop,hopeful,0.5,85,0.3,0.75,0.2,32972133,2013,3.9,dreamy|heartfelt|laid-back,1
-29,A Lot,21 Savage,I Am > I Was,hip-hop,reflective,0.6,146,0.45,0.84,0.04,41021112,2018,4.8,powerful|soulful|storytelling,1
-30,Bank Account,21 Savage,Issa Album,hip-hop,gritty,0.65,75,0.3,0.88,0.02,41021112,2017,3.67,gritty|dark|swagger,1
-31,Ease,Whirr,Whirr / Nothing (split),shoegaze,dreamy,0.55,100,0.3,0.3,0.1,818800,2014,3.45,hazy|distorted|wistful,0
-32,Everlong,Foo Fighters,The Colour and the Shape,rock,intense,0.88,158,0.5,0.4,0.01,22733565,1997,4.17,driving|anthemic|urgent,0
-33,Even Flow,Pearl Jam,Ten,rock,restless,0.85,105,0.45,0.5,0.03,17768295,1991,4.9,gritty|driving|raw,0
-34,Blue in Green,Miles Davis,Kind of Blue,jazz,mellow,0.15,60,0.2,0.25,0.9,2800000,1959,5.62,slow|late-night|introspective,0
-35,Black Hole Sun,Soundgarden,Superunknown,grunge,eerie,0.7,100,0.3,0.3,0.03,12465800,1994,5.3,surreal|dark|melodic,0
-36,Higher,Creed,Human Clay,post-grunge,hopeful,0.75,78,0.5,0.35,0.02,17289697,1999,5.27,soaring|anthemic|earnest,0
-37,It's Been Awhile,Staind,Break the Cycle,post-grunge,sad,0.55,124,0.15,0.4,0.15,12696205,2001,4.42,brooding|regretful|heavy,0
-38,Change (In the House of Flies),Deftones,White Pony,metal,brooding,0.75,90,0.2,0.3,0.02,19385145,2000,4.98,atmospheric|heavy|dark,0
-39,EoO,Bad Bunny,Debí Tirar Más Fotos,latin,playful,0.72,128,0.75,0.82,0.1,89209152,2025,3.42,danceable|nostalgic|bouncy,0
-40,DtMF,Bad Bunny,Debí Tirar Más Fotos,latin,nostalgic,0.6,100,0.55,0.7,0.2,89209152,2025,3.95,wistful|heartfelt|warm,0
-41,Suit & Tie,Justin Timberlake,The 20/20 Experience,pop,confident,0.65,102,0.7,0.8,0.1,56489664,2013,5.43,smooth|swagger|groovy,0
-42,Giant Steps,John Coltrane,Giant Steps,jazz,intense,0.75,286,0.6,0.3,0.85,4500000,1960,4.72,complex|fast|virtuosic,0
-43,Naima,John Coltrane,Giant Steps,jazz,mellow,0.2,62,0.35,0.2,0.9,4500000,1960,4.35,tender|slow|lyrical,0
-44,Blue Train,John Coltrane,Blue Train,jazz,soulful,0.55,120,0.55,0.4,0.85,4500000,1958,10.72,bluesy|swinging|bold,0
-45,I Love Music,Ahmad Jamal Trio,The Awakening,jazz,hypnotic,0.4,105,0.5,0.4,0.9,457050,1970,7.32,hypnotic|groovy|sampled,0
-46,Milestones,Miles Davis,Milestones,jazz,swinging,0.65,160,0.65,0.45,0.85,2800000,1958,5.82,modal|upbeat|cool,0
-47,My Favorite Things,John Coltrane,My Favorite Things,jazz,spiritual,0.6,150,0.55,0.3,0.85,4500000,1961,13.68,modal|trance-like|spiritual,0
+1,Billie Jean,Michael Jackson,Thriller,pop,moody,0.65,117,0.7,0.92,0.02,89563979,1982,4.9,"smooth,dark,groovy",0
+2,Beat It,Michael Jackson,Thriller,rock,intense,0.82,139,0.75,0.7,0.03,89563979,1982,4.32,"driving,powerful,catchy",0
+3,Purple Rain,Prince,Purple Rain,rock,emotional,0.5,113,0.2,0.35,0.2,24860802,1984,8.67,"anthemic,heartfelt,powerful",0
+4,When Doves Cry,Prince,Purple Rain,pop,moody,0.65,127,0.6,0.7,0.05,24860802,1984,5.87,"complex,dark,groovy",0
+5,Kiss,Prince,Parade,funk,playful,0.7,112,0.85,0.8,0.2,24860802,1986,3.63,"groovy,playful,danceable",0
+6,HUMBLE.,Kendrick Lamar,DAMN.,hip-hop,confident,0.62,150,0.42,0.91,0.0,68312603,2017,2.95,"powerful,swagger,catchy",1
+7,DNA.,Kendrick Lamar,DAMN.,hip-hop,intense,0.85,140,0.4,0.64,0.0,68312603,2017,3.08,"aggressive,powerful,swagger",1
+8,Alright,Kendrick Lamar,To Pimp a Butterfly,hip-hop,hopeful,0.6,110,0.5,0.77,0.1,68312603,2015,3.65,"uplifting,powerful,upbeat",1
+9,Money Trees,Kendrick Lamar,"good kid, m.A.A.d city",hip-hop,dreamy,0.55,144,0.35,0.7,0.1,68312603,2012,6.43,"dreamy,nostalgic,laid-back",1
+10,Thuggin',Freddie Gibbs,Piñata,hip-hop,gritty,0.65,95,0.45,0.7,0.1,3841025,2014,3.77,"gritty,soulful,laid-back",1
+11,1985,Freddie Gibbs,Alfredo,hip-hop,relaxed,0.55,90,0.5,0.65,0.1,3841025,2020,2.53,"laid-back,gritty,smooth",1
+12,Scottie Beam,Freddie Gibbs,Alfredo,hip-hop,confident,0.6,85,0.45,0.7,0.05,3841025,2020,4.07,"smooth,swagger,gritty",1
+13,Master of Puppets,Metallica,Master of Puppets,metal,angry,0.92,212,0.3,0.35,0.0,33324219,1986,8.6,"aggressive,heavy,driving",0
+14,Smells Like Teen Spirit,Nirvana,Nevermind,rock,angry,0.9,117,0.72,0.5,0.0,38774587,1991,5.02,"aggressive,catchy,driving",0
+15,Hurt,Johnny Cash,American IV: The Man Comes Around,country,sad,0.3,90,0.1,0.35,0.75,12169488,2002,3.63,"heartfelt,somber,introspective",0
+16,Ain't No Sunshine,Bill Withers,Just As I Am,soul,sad,0.3,78,0.35,0.55,0.72,17851353,1971,2.07,"heartfelt,soulful,somber",0
+17,One More Time,Daft Punk,Discovery,electronic,euphoric,0.85,123,0.78,0.82,0.02,27813037,2001,5.33,"upbeat,danceable,catchy",0
+18,"Harder, Better, Faster, Stronger",Daft Punk,Discovery,electronic,intense,0.8,123,0.5,0.75,0.02,27813037,2001,3.75,"driving,danceable,catchy",0
+19,Human Nature,Michael Jackson,Thriller,pop,chill,0.45,93,0.55,0.75,0.3,89563979,1982,4.08,"smooth,dreamy,laid-back",0
+20,Let's Go Crazy,Prince,Purple Rain,rock,euphoric,0.88,160,0.75,0.5,0.04,24860802,1984,4.65,"driving,upbeat,powerful",0
+21,Hey Ya!,OutKast,Speakerboxxx/The Love Below,pop,playful,0.87,159,0.96,0.73,0.06,27732114,2003,3.92,"upbeat,catchy,playful",0
+22,The Way You Move,OutKast,Speakerboxxx/The Love Below,hip-hop,smooth,0.7,130,0.75,0.85,0.1,27732114,2003,3.9,"smooth,groovy,danceable",0
+23,Yellow,Coldplay,Parachutes,rock,hopeful,0.66,173,0.29,0.43,0.0,90403426,2000,4.48,"anthemic,uplifting,heartfelt",0
+24,Trouble,Coldplay,Parachutes,rock,sad,0.5,144,0.22,0.45,0.4,90403426,2000,4.52,"heartfelt,somber,introspective",0
+25,Formation,Beyoncé,Lemonade,r&b,confident,0.62,123,0.4,0.77,0.03,61248074,2016,3.43,"powerful,swagger,upbeat",1
+26,Hold Up,Beyoncé,Lemonade,r&b,playful,0.55,85,0.65,0.8,0.05,61248074,2016,3.68,"smooth,playful,upbeat",0
+27,Redbone,Childish Gambino,"Awaken, My Love!",funk,romantic,0.35,81,0.59,0.74,0.2,32972133,2016,5.45,"smooth,groovy,soulful",0
+28,3005,Childish Gambino,Because the Internet,hip-hop,hopeful,0.5,85,0.3,0.75,0.2,32972133,2013,3.9,"dreamy,heartfelt,laid-back",1
+29,A Lot,21 Savage,I Am > I Was,hip-hop,reflective,0.6,146,0.45,0.84,0.04,41021112,2018,4.8,"powerful,soulful,introspective",1
+30,Bank Account,21 Savage,Issa Album,hip-hop,gritty,0.65,75,0.3,0.88,0.02,41021112,2017,3.67,"gritty,dark,swagger",1
+31,Ease,Whirr,Whirr / Nothing (split),shoegaze,dreamy,0.55,100,0.3,0.3,0.1,818800,2014,3.45,"dreamy,gritty,nostalgic",0
+32,Everlong,Foo Fighters,The Colour and the Shape,rock,intense,0.88,158,0.5,0.4,0.01,22733565,1997,4.17,"driving,anthemic,heartfelt",0
+33,Even Flow,Pearl Jam,Ten,rock,restless,0.85,105,0.45,0.5,0.03,17768295,1991,4.9,"gritty,driving,aggressive",0
+34,Blue in Green,Miles Davis,Kind of Blue,jazz,mellow,0.15,60,0.2,0.25,0.9,2800000,1959,5.62,"laid-back,introspective,somber",0
+35,Black Hole Sun,Soundgarden,Superunknown,grunge,eerie,0.7,100,0.3,0.3,0.03,12465800,1994,5.3,"dreamy,dark,heavy",0
+36,Higher,Creed,Human Clay,post-grunge,hopeful,0.75,78,0.5,0.35,0.02,17289697,1999,5.27,"anthemic,uplifting,heartfelt",0
+37,It's Been Awhile,Staind,Break the Cycle,post-grunge,sad,0.55,124,0.15,0.4,0.15,12696205,2001,4.42,"dark,somber,heavy",0
+38,Change (In the House of Flies),Deftones,White Pony,metal,brooding,0.75,90,0.2,0.3,0.02,19385145,2000,4.98,"dreamy,heavy,dark",0
+39,EoO,Bad Bunny,Debí Tirar Más Fotos,latin,playful,0.72,128,0.75,0.82,0.1,89209152,2025,3.42,"danceable,nostalgic,upbeat",0
+40,DtMF,Bad Bunny,Debí Tirar Más Fotos,latin,nostalgic,0.6,100,0.55,0.7,0.2,89209152,2025,3.95,"nostalgic,heartfelt,laid-back",0
+41,Suit & Tie,Justin Timberlake,The 20/20 Experience,pop,confident,0.65,102,0.7,0.8,0.1,56489664,2013,5.43,"smooth,swagger,groovy",0
+42,Giant Steps,John Coltrane,Giant Steps,jazz,intense,0.75,286,0.6,0.3,0.85,4500000,1960,4.72,"complex,driving,upbeat",0
+43,Naima,John Coltrane,Giant Steps,jazz,mellow,0.2,62,0.35,0.2,0.9,4500000,1960,4.35,"heartfelt,laid-back,introspective",0
+44,Blue Train,John Coltrane,Blue Train,jazz,soulful,0.55,120,0.55,0.4,0.85,4500000,1958,10.72,"soulful,groovy,powerful",0
+45,I Love Music,Ahmad Jamal Trio,The Awakening,jazz,hypnotic,0.4,105,0.5,0.4,0.9,457050,1970,7.32,"dreamy,groovy,laid-back",0
+46,Milestones,Miles Davis,Milestones,jazz,swinging,0.65,160,0.65,0.45,0.85,2800000,1958,5.82,"complex,upbeat,groovy",0
+47,My Favorite Things,John Coltrane,My Favorite Things,jazz,spiritual,0.6,150,0.55,0.3,0.85,4500000,1961,13.68,"complex,dreamy,introspective",0

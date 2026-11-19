@@ -5,7 +5,7 @@ def make_small_recommender() -> Recommender:
         Song(
             id=1,
             title="Test Pop Track",
-            artist="Test Artist",
+            artist="Test Arti`st",
             genre="pop",
             mood="happy",
             energy=0.8,
