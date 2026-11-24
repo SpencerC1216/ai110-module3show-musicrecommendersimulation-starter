@@ -54,3 +54,18 @@ id,title,artist,album,genre,mood,energy,tempo_bpm,valence,danceability,acousticn
 53,Avalyn II,Slowdive,Slowdive (EP),shoegaze,dreamy,0.25,90,0.2,0.2,0.15,4000000,1990,8.13,hazy|ambient|instrumental,0
 54,Be Quiet and Drive (Far Away),Deftones,Around the Fur,metal,brooding,0.7,95,0.25,0.4,0.03,19385145,1997,5.13,melodic|atmospheric|heavy,0
 55,Blue Line Baby,Nothing,Tired of Tomorrow,shoegaze,sad,0.6,110,0.2,0.3,0.05,600000,2016,3.5,hazy|heavy|melancholic,0
+56,Jolene,Dolly Parton,Jolene,country,sad,0.5,111,0.45,0.55,0.7,23342906,1973,2.72,heartfelt|plaintive|stripped,0
+57,What's Going On,Marvin Gaye,What's Going On,soul,reflective,0.5,100,0.5,0.6,0.4,22542396,1971,3.88,smooth|socially-conscious|warm,0
+58,Mercy Mercy Me (The Ecology),Marvin Gaye,What's Going On,soul,mellow,0.4,80,0.4,0.5,0.45,22542396,1971,3.27,somber|smooth|socially-conscious,0
+59,My Girl,The Temptations,The Temptations Sing Smokey,soul,romantic,0.45,105,0.9,0.6,0.5,10000000,1965,2.93,warm|upbeat|classic,0
+60,I Can't Help It,Michael Jackson,Off the Wall,soul,smooth,0.4,90,0.6,0.7,0.2,89563979,1979,4.48,smooth|silky|falsetto,0
+61,Bound for the Floor,Local H,As Good as Dead,grunge,angry,0.85,120,0.5,0.4,0.01,2210282,1996,3.7,driving|raw|catchy,0
+62,Nowhere,Therapy?,Troublegum,rock,intense,0.9,155,0.35,0.35,0.01,177589,1994,2.43,aggressive|punky|driving,0
+63,Flight of the Bumblebee,Nikolai Rimsky-Korsakov,The Tale of Tsar Saltan,classical,restless,0.9,170,0.5,0.2,0.95,2500000,1900,1.28,virtuosic|frantic|orchestral,0
+64,"Piano Concerto No. 21 in C Major, K. 467",Wolfgang Amadeus Mozart,Piano Concerto No. 21 (K. 467),classical,hopeful,0.4,120,0.7,0.25,0.95,8000000,1785,29.0,graceful|optimistic|orchestral,0
+65,Butter,BTS,Butter,k-pop,confident,0.76,110,0.9,0.76,0.01,20000000,2021,2.7,smooth|catchy|upbeat,0
+66,7 Summers,Morgan Wallen,Dangerous: The Double Album,country,nostalgic,0.55,72,0.45,0.5,0.25,35000000,2021,3.5,dreamy|nostalgic|soft-rock,0
+67,Should've Been a Cowboy,Toby Keith,Toby Keith,country,nostalgic,0.6,128,0.65,0.6,0.2,8000000,1993,3.5,twangy|storytelling|catchy,0
+68,So Blue,Prince,For You,r&b,sad,0.3,66,0.3,0.45,0.4,24860802,1978,4.43,heartfelt|ballad|falsetto,0
+69,I Know You,Faye Webster,Faye Webster,folk,sad,0.3,80,0.25,0.4,0.6,6000000,2017,4.2,wistful|intimate|slow,0
+70,Lip,His Name Is Alive,Mouth by Mouth,dream-pop,dreamy,0.4,100,0.3,0.3,0.3,150000,1993,3.5,ethereal|hazy|experimental,0
