@@ -125,3 +125,27 @@ def test_catalog_uses_only_real_artists_and_albums():
 def test_duration_is_in_minutes_and_plausible():
     for s in load_songs("data/songs.csv"):
         assert 1.0 < s["duration_min"] < 35.0
+
+
+def _dup_catalog():
+    """Three songs by one artist (all great matches) plus two by other artists (slightly worse)."""
+    mk = lambda i, artist, genre, energy: _song(id=i, title=f"t{i}", artist=artist, genre=genre, energy=energy)
+    return [mk(1, "A", "pop", 0.5), mk(2, "A", "pop", 0.5), mk(3, "A", "pop", 0.5),
+            mk(4, "B", "pop", 0.45), mk(5, "C", "pop", 0.45)]
+
+
+def test_diversity_off_allows_same_artist_repeats():
+    ranked = recommend_songs(_base_prefs(), _dup_catalog(), k=3, diversity=False)
+    assert [s["artist"] for s, _, _ in ranked] == ["A", "A", "A"]
+
+
+def test_diversity_spreads_artists_and_explains_penalty():
+    ranked = recommend_songs(_base_prefs(), _dup_catalog(), k=3, diversity=True)
+    assert [s["artist"] for s, _, _ in ranked] == ["A", "B", "C"] or len({s["artist"] for s, _, _ in ranked}) == 3
+    assert any("artist already picked" in ex for _, _, ex in recommend_songs(_base_prefs(), _dup_catalog(), k=5))
+
+
+def test_diversity_penalty_never_changes_the_first_pick():
+    plain = recommend_songs(_base_prefs(), _dup_catalog(), k=1, diversity=False)[0][0]["id"]
+    diverse = recommend_songs(_base_prefs(), _dup_catalog(), k=1, diversity=True)[0][0]["id"]
+    assert plain == diverse
