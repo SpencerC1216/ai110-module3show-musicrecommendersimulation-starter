@@ -20,6 +20,10 @@ TAG_WEIGHT = 0.4            # points per overlapping mood tag
 TAG_MAX = 1.2               # cap on total tag points
 EXPLICIT_PENALTY = 1.0      # points removed for explicit songs when the user avoids them
 
+# --- Diversity penalty (Challenge 3): applied while building the top-k list ---
+ARTIST_FATIGUE = 0.6        # per earlier pick by the same artist; grows each time (0.6, 1.2, 1.8 ...)
+GENRE_FATIGUE = 0.1         # per earlier pick in the same genre; deliberately tiny
+
 
 @dataclass
 class Song:
@@ -158,25 +162,59 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     return round(score, 3), reasons
 
 
-def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
-    """Score every song, sort high to low, and return the top k as (song, score, explanation)."""
+def recommend_songs(
+    user_prefs: Dict, songs: List[Dict], k: int = 5, diversity: bool = True
+) -> List[Tuple[Dict, float, str]]:
+    """Score every song and return the top k as (song, score, explanation).
+
+    With diversity=True the list is built one pick at a time. Before each pick, every remaining
+    song loses points for each earlier pick by the same artist (ARTIST_FATIGUE x count, so the
+    penalty grows: "voter fatigue") and a little for each earlier pick in the same genre
+    (GENRE_FATIGUE x count). The best adjusted score wins the slot. diversity=False gives the
+    plain score-sorted list.
+    """
     scored = []
     for song in songs:
         score, reasons = score_song(user_prefs, song)
-        scored.append((song, score, "; ".join(reasons)))
-    return sorted(scored, key=lambda item: item[1], reverse=True)[:k]
+        scored.append((song, score, reasons))
+
+    if not diversity:
+        ranked = sorted(scored, key=lambda item: item[1], reverse=True)[:k]
+        return [(s, sc, "; ".join(r)) for s, sc, r in ranked]
+
+    picked: List[Tuple[Dict, float, str]] = []
+    artist_count: Dict[str, int] = {}
+    genre_count: Dict[str, int] = {}
+    remaining = list(scored)
+    while remaining and len(picked) < k:
+        best = None
+        for song, base, reasons in remaining:
+            n_artist = artist_count.get(song["artist"], 0)
+            n_genre = genre_count.get(song["genre"], 0)
+            adjusted = base - ARTIST_FATIGUE * n_artist - GENRE_FATIGUE * n_genre
+            if best is None or adjusted > best[0]:
+                best = (adjusted, song, reasons, n_artist, n_genre)
+        adjusted, song, reasons, n_artist, n_genre = best
+        reasons = list(reasons)
+        if n_artist:
+            reasons.append(f"artist already picked {n_artist}x (-{ARTIST_FATIGUE * n_artist:.2f})")
+        if n_genre:
+            reasons.append(f"genre already picked {n_genre}x (-{GENRE_FATIGUE * n_genre:.2f})")
+        picked.append((song, round(adjusted, 3), "; ".join(reasons)))
+        artist_count[song["artist"]] = n_artist + 1
+        genre_count[song["genre"]] = n_genre + 1
+        remaining = [r for r in remaining if r[0] is not song]
+    return picked
 
 
 class Recommender:
     """OOP wrapper around the functional recommender (used by tests)."""
 
     def __init__(self, songs: List[Song]):
-        """Store the song catalog."""
         self.songs = songs
 
     @staticmethod
     def _prefs(user: UserProfile) -> Dict:
-        """Convert a UserProfile into the prefs dict that recommend_songs expects."""
         return {k: v for k, v in asdict(user).items() if v is not None}
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
