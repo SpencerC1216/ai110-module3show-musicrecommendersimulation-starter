@@ -171,10 +171,12 @@ class Recommender:
     """OOP wrapper around the functional recommender (used by tests)."""
 
     def __init__(self, songs: List[Song]):
+        """Store the song catalog."""
         self.songs = songs
 
     @staticmethod
     def _prefs(user: UserProfile) -> Dict:
+        """Convert a UserProfile into the prefs dict that recommend_songs expects."""
         return {k: v for k, v in asdict(user).items() if v is not None}
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
