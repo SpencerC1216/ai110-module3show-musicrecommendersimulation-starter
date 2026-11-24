@@ -15,9 +15,12 @@ from src.recommender import load_songs, recommend_songs
 
 st.set_page_config(page_title="Music Recommender", page_icon="🟨", layout="wide")
 
-INK, PAPER, GRAY = "#111111", "#ffffff", "#e9e7df"
+INK, PAPER, GRAY, DARK = "#f2efe6", "#0d0d0f", "#1b1b1f", "#111111"
 YELLOW, BLUE, RED, GREEN = "#ffd400", "#1f5bff", "#e5322d", "#19a974"
-RANK_COLORS = [(YELLOW, INK), (BLUE, "#fff"), (RED, "#fff"), (GREEN, "#fff"), (INK, "#fff")]
+RANK_COLORS = [  # one (background, text) pair per rank, so every recommended song gets its own color
+    (YELLOW, DARK), (BLUE, "#fff"), (RED, "#fff"), (GREEN, "#fff"), ("#ff8a00", DARK),
+    ("#8a4fff", "#fff"), ("#00b3c7", DARK), ("#ff5fa2", DARK), ("#b6e600", DARK), (INK, DARK),
+]
 
 st.markdown(
     f"""
@@ -39,17 +42,17 @@ h3.lbl {{ font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter
 .card .score {{ font-size: 1.4rem; font-weight: 900; margin-top: .9rem; border-top: 3px solid currentColor; padding-top: .4rem; }}
 .grid {{ display: grid; grid-template-columns: repeat(auto-fill, 56px); gap: 6px; }}
 .sq {{ width: 56px; height: 56px; border: 3px solid {INK}; display: flex; align-items: center;
-       justify-content: center; font-weight: 900; font-size: .95rem; background: {GRAY}; color: #8a877c; }}
+       justify-content: center; font-weight: 900; font-size: .95rem; background: {GRAY}; color: #77746b; }}
 .why {{ border-left: 8px solid {INK}; padding: .2rem 0 .2rem .9rem; margin: .7rem 0; font-size: 1.3rem; }}
 .eyebrow {{ font-weight: 900; letter-spacing: 3px; font-size: .85rem; color: {RED}; text-transform: uppercase; margin-bottom: .4rem; }}
-mark.y {{ background: {YELLOW}; color: {INK}; padding: 0 .25em; font-weight: 900; }}
+mark.y {{ background: {YELLOW}; color: {DARK}; padding: 0 .25em; font-weight: 900; }}
 mark.b {{ background: {BLUE}; color: #fff; padding: 0 .25em; font-weight: 900; }}
 mark.r {{ background: {RED}; color: #fff; padding: 0 .25em; font-weight: 900; }}
 .part {{ font-weight: 900; font-size: .85rem; letter-spacing: 3px; text-transform: uppercase; color: {BLUE}; margin: 2.2rem 0 .1rem 0; }}
 .story {{ font-size: 1.2rem; line-height: 1.55; max-width: 44rem; margin: .4rem 0 1rem 0; }}
 .huge {{ font-size: 7rem; font-weight: 900; letter-spacing: -5px; line-height: .95; margin: .6rem 0 0 0; }}
-.aside {{ border: 3px dashed {INK}; padding: .7rem 1rem; margin: 1.2rem 0; max-width: 44rem; font-size: 1rem; background: #fffbe0; }}
-.foot {{ font-size: .85rem; color: #555; max-width: 44rem; border-top: 2px solid {INK}; margin-top: 2.5rem; padding-top: .6rem; }}
+.aside {{ border: 3px dashed {INK}; padding: .7rem 1rem; margin: 1.2rem 0; max-width: 44rem; font-size: 1rem; background: #2a2509; }}
+.foot {{ font-size: .85rem; color: #9a978c; max-width: 44rem; border-top: 2px solid {INK}; margin-top: 2.5rem; padding-top: .6rem; }}
 button[data-baseweb="tab"] {{ font-weight: 900; text-transform: uppercase; letter-spacing: .5px; }}
 </style>
 """,
@@ -151,7 +154,7 @@ def pie_chart(rank: int, song: dict, score: float, explanation: str):
         order=alt.Order("Points:Q", sort="descending"),
         tooltip=["Rule", "Points", "Share"],
     )
-    arcs = base.mark_arc(innerRadius=48, outerRadius=105, stroke=INK, strokeWidth=3)
+    arcs = base.mark_arc(innerRadius=48, outerRadius=105, stroke=PAPER, strokeWidth=3)
     labels = base.mark_text(radius=128, fontSize=14, fontWeight="bold", color=INK).encode(text="Points:Q")
     center = (
         alt.Chart(pd.DataFrame({"t": [f"{score:.2f}"]}))
@@ -166,13 +169,21 @@ def pie_chart(rank: int, song: dict, score: float, explanation: str):
 
 
 def show_pies() -> None:
-    cols = st.columns(min(3, len(results)))
-    for idx, (s, score, ex) in enumerate(results[:3]):
-        chart = pie_chart(idx + 1, s, score, ex)
-        with cols[idx]:
-            st.markdown(f"<div style='font-size:1.4rem;font-weight:900'>{idx + 1}. {esc(s['title'])}</div>", unsafe_allow_html=True)
-            if chart is not None:
-                st.altair_chart(chart)
+    for start in range(0, len(results), 3):
+        row = results[start:start + 3]
+        cols = st.columns(3)
+        for offset, (s, score, ex) in enumerate(row):
+            idx = start + offset
+            bg = RANK_COLORS[min(idx + 1, len(RANK_COLORS)) - 1][0]
+            chart = pie_chart(idx + 1, s, score, ex)
+            with cols[offset]:
+                st.markdown(
+                    f"<div style='font-size:1.4rem;font-weight:900;border-left:12px solid {bg};padding-left:.5rem'>"
+                    f"{idx + 1}. {esc(s['title'])}</div>",
+                    unsafe_allow_html=True,
+                )
+                if chart is not None:
+                    st.altair_chart(chart)
 
 
 results = recommend_songs(prefs, songs, k)
@@ -241,7 +252,7 @@ with tab_picks:
     st.markdown(
         "<p class='story'>Every point comes from one of a few rules. A song gets points for matching your genre, "
         "matching your mood, having energy close to your target, and sounding the way you like it to sound. "
-        "Here is how the top three split it up. A bigger slice means that rule did more of the work.</p>",
+        "Here is how each song split it up. A bigger slice means that rule did more of the work.</p>",
         unsafe_allow_html=True,
     )
     chips = "".join(
@@ -268,7 +279,7 @@ with tab_catalog:
             {
                 "Song": f"{s['title']} - {s['artist']}",
                 "Score": sc,
-                "Color": RANK_COLORS[min(picked[s["id"]], len(RANK_COLORS)) - 1][0] if s["id"] in picked else "#c9c6ba",
+                "Color": RANK_COLORS[min(picked[s["id"]], len(RANK_COLORS)) - 1][0] if s["id"] in picked else "#44444b",
             }
             for s, sc, _ in everything
         ]
@@ -290,7 +301,7 @@ with tab_catalog:
         (bars + nums)
         .properties(height=30 * len(df_all))
         .configure_view(strokeWidth=0)
-        .configure_axis(labelColor=INK, titleColor=INK, domainColor=INK, gridColor="#dddbd2")
+        .configure_axis(labelColor=INK, titleColor=INK, domainColor=INK, gridColor="#2c2c31")
     )
 
 with tab_details:
