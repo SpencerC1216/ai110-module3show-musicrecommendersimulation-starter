@@ -25,6 +25,46 @@ ARTIST_FATIGUE = 0.6        # per earlier pick by the same artist; grows each ti
 GENRE_FATIGUE = 0.1         # per earlier pick in the same genre; deliberately tiny
 
 
+# --- Scoring modes (Strategy pattern) ---
+# A mode is just a bundle of the four core weights. score_song() reads its weights from the mode it
+# is given, so adding a new ranking strategy means adding one entry to SCORING_MODES, with no
+# change to the scoring or ranking code.
+@dataclass(frozen=True)
+class ScoringMode:
+    name: str
+    description: str
+    genre: float
+    mood: float
+    energy: float
+    acoustic: float
+
+
+SCORING_MODES: Dict[str, ScoringMode] = {
+    m.name: m
+    for m in [
+        ScoringMode("balanced", "Default recipe: genre matters most, then energy, then mood.",
+                    GENRE_WEIGHT, MOOD_WEIGHT, ENERGY_WEIGHT, ACOUSTIC_WEIGHT),
+        ScoringMode("genre_first", "Stay inside the genre you picked; energy and mood only break ties.",
+                    3.0, 1.0, 1.0, 0.5),
+        ScoringMode("mood_first", "Chase the feeling: a mood match can beat a genre match.",
+                    1.0, 3.0, 1.5, 0.5),
+        ScoringMode("energy_focused", "Match the intensity level first; genre and mood matter less.",
+                    1.0, 1.0, 3.0, 0.5),
+    ]
+}
+DEFAULT_MODE = "balanced"
+
+
+def get_mode(mode) -> ScoringMode:
+    """Accept a mode name (str) or a ScoringMode and return the ScoringMode."""
+    if isinstance(mode, ScoringMode):
+        return mode
+    try:
+        return SCORING_MODES[mode]
+    except KeyError:
+        raise ValueError(f"Unknown mode {mode!r}. Choose from: {', '.join(SCORING_MODES)}") from None
+
+
 @dataclass
 class Song:
     """Represents a song and its attributes."""
@@ -91,22 +131,26 @@ def _fmt_duration(minutes: float) -> str:
     return f"{total // 60}:{total % 60:02d}"
 
 
-def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
-    """Score one song against user prefs and return (score, list of reasons)."""
+def score_song(user_prefs: Dict, song: Dict, mode=DEFAULT_MODE) -> Tuple[float, List[str]]:
+    """Score one song against user prefs and return (score, list of reasons).
+
+    `mode` is a mode name or ScoringMode that sets the four core weights (see SCORING_MODES).
+    """
+    w = get_mode(mode)
     score = 0.0
     reasons: List[str] = []
 
     if song["genre"].lower() == str(user_prefs.get("favorite_genre", "")).lower():
-        score += GENRE_WEIGHT
-        reasons.append(f"genre match: {song['genre']} (+{GENRE_WEIGHT:.1f})")
+        score += w.genre
+        reasons.append(f"genre match: {song['genre']} (+{w.genre:.1f})")
 
     if song["mood"].lower() == str(user_prefs.get("favorite_mood", "")).lower():
-        score += MOOD_WEIGHT
-        reasons.append(f"mood match: {song['mood']} (+{MOOD_WEIGHT:.1f})")
+        score += w.mood
+        reasons.append(f"mood match: {song['mood']} (+{w.mood:.1f})")
 
     if "target_energy" in user_prefs:
         gap = abs(song["energy"] - user_prefs["target_energy"])
-        points = ENERGY_WEIGHT * (1.0 - gap)
+        points = w.energy * (1.0 - gap)
         score += points
         reasons.append(
             f"energy {song['energy']:.2f} vs target {user_prefs['target_energy']:.2f} (+{points:.2f})"
@@ -114,7 +158,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
 
     if "likes_acoustic" in user_prefs:
         fit = song["acousticness"] if user_prefs["likes_acoustic"] else 1.0 - song["acousticness"]
-        points = ACOUSTIC_WEIGHT * fit
+        points = w.acoustic * fit
         score += points
         label = "acoustic" if user_prefs["likes_acoustic"] else "non-acoustic"
         reasons.append(f"{label} fit (+{points:.2f})")
@@ -163,7 +207,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
 
 
 def recommend_songs(
-    user_prefs: Dict, songs: List[Dict], k: int = 5, diversity: bool = True
+    user_prefs: Dict, songs: List[Dict], k: int = 5, diversity: bool = True, mode=DEFAULT_MODE
 ) -> List[Tuple[Dict, float, str]]:
     """Score every song and return the top k as (song, score, explanation).
 
@@ -171,11 +215,11 @@ def recommend_songs(
     song loses points for each earlier pick by the same artist (ARTIST_FATIGUE x count, so the
     penalty grows: "voter fatigue") and a little for each earlier pick in the same genre
     (GENRE_FATIGUE x count). The best adjusted score wins the slot. diversity=False gives the
-    plain score-sorted list.
+    plain score-sorted list. `mode` picks the scoring strategy (see SCORING_MODES).
     """
     scored = []
     for song in songs:
-        score, reasons = score_song(user_prefs, song)
+        score, reasons = score_song(user_prefs, song, mode)
         scored.append((song, score, reasons))
 
     if not diversity:
@@ -205,7 +249,6 @@ def recommend_songs(
         genre_count[song["genre"]] = n_genre + 1
         remaining = [r for r in remaining if r[0] is not song]
     return picked
-
 
 class Recommender:
     """OOP wrapper around the functional recommender (used by tests)."""

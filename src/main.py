@@ -4,7 +4,9 @@ Command line runner for the Music Recommender Simulation.
 Run from the repo root:  python -m src.main
 """
 
-from src.recommender import load_songs, recommend_songs
+import argparse
+
+from src.recommender import DEFAULT_MODE, SCORING_MODES, load_songs, recommend_songs
 
 # Normal profiles: clear, consistent tastes.
 PROFILES = {
@@ -44,8 +46,8 @@ EDGE_CASES = {
         "favorite_genre": "soul", "favorite_mood": "sad",
         "target_energy": 0.9, "likes_acoustic": False,
     },
-    "Unknown genre (k-pop)": {
-        "favorite_genre": "k-pop", "favorite_mood": "euphoric",
+    "Unknown genre (polka)": {
+        "favorite_genre": "polka", "favorite_mood": "euphoric",
         "target_energy": 0.8, "likes_acoustic": False,
     },
     "Middle-of-the-road (no genre fit)": {
@@ -86,10 +88,43 @@ STRETCH_PROFILES = {
 BASE_KEYS = {"favorite_genre", "favorite_mood", "target_energy", "likes_acoustic"}
 
 
-def show(name: str, prefs: dict, songs: list, k: int = 5) -> None:
-    """Print the top-k recommendations for one profile."""
-    print("=" * 64)
-    print(f"Profile: {name}")
+def _ascii_grid(headers: list, rows: list) -> str:
+    """Tiny fallback table (used if `tabulate` is not installed). Cells may hold several lines."""
+    cells = [[str(c).split("\n") for c in row] for row in rows]
+    widths = [max(len(h), *(len(line) for row in cells for line in row[i])) for i, h in enumerate(headers)]
+    rule = "+" + "+".join("-" * (w + 2) for w in widths) + "+"
+
+    def fmt(parts: list) -> list:
+        height = max(len(p) for p in parts)
+        return [
+            "| " + " | ".join((p[n] if n < len(p) else "").ljust(w) for p, w in zip(parts, widths)) + " |"
+            for n in range(height)
+        ]
+
+    out = [rule, *fmt([[h] for h in headers]), rule]
+    for row in cells:
+        out += fmt(row) + [rule]
+    return "\n".join(out)
+
+
+def format_table(results: list) -> str:
+    """Build a table of recommendations: rank, song, genre/mood, score and the reasons for the score."""
+    headers = ["#", "Song", "Genre / Mood", "Score", "Why (reasons)"]
+    rows = [
+        [rank, f"{song['title']}\n{song['artist']}", f"{song['genre']} / {song['mood']}",
+         f"{score:.2f}", explanation.replace("; ", "\n")]
+        for rank, (song, score, explanation) in enumerate(results, 1)
+    ]
+    try:
+        from tabulate import tabulate
+        return tabulate(rows, headers=headers, tablefmt="grid", disable_numparse=True)
+    except ImportError:
+        return _ascii_grid(headers, rows)
+
+
+def show(name: str, prefs: dict, songs: list, k: int = 5, mode: str = DEFAULT_MODE) -> None:
+    """Print the top-k recommendations for one profile as a table (with the reasons for each score)."""
+    print(f"Profile: {name}   [mode: {mode}]")
     print(
         f"  genre={prefs['favorite_genre']}, mood={prefs['favorite_mood']}, "
         f"energy={prefs['target_energy']}, likes_acoustic={prefs['likes_acoustic']}"
@@ -97,23 +132,46 @@ def show(name: str, prefs: dict, songs: list, k: int = 5) -> None:
     extras = {k: v for k, v in prefs.items() if k not in BASE_KEYS}
     if extras:
         print("  extra: " + ", ".join(f"{k}={v}" for k, v in extras.items()))
-    print("-" * 64)
-    for rank, (song, score, explanation) in enumerate(recommend_songs(prefs, songs, k), 1):
-        print(f"{rank}. {song['title']} by {song['artist']}  [{song['genre']}/{song['mood']}]")
-        if song.get("album"):
-            print(f"   Album: {song['album']} ({song['release_year']})")
-        print(f"   Score: {score:.2f}")
-        for reason in explanation.split("; "):
-            print(f"     - {reason}")
+    print(format_table(recommend_songs(prefs, songs, k, mode=mode)))
+    print()
+
+
+def compare_modes(name: str, prefs: dict, songs: list, k: int = 3) -> None:
+    """Show the top k for one profile under every scoring mode, side by side."""
+    print(f"Profile: {name}  (top {k} per mode)")
+    headers = ["#"] + list(SCORING_MODES)
+    cols = {m: recommend_songs(prefs, songs, k, mode=m) for m in SCORING_MODES}
+    rows = [[i + 1] + [f"{cols[m][i][0]['title']} ({cols[m][i][1]:.2f})" for m in SCORING_MODES] for i in range(k)]
+    try:
+        from tabulate import tabulate
+        print(tabulate(rows, headers=headers, tablefmt="grid", disable_numparse=True))
+    except ImportError:
+        print(_ascii_grid(headers, rows))
     print()
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Music recommender simulation")
+    parser.add_argument("--mode", default=DEFAULT_MODE, choices=list(SCORING_MODES),
+                        help="scoring strategy (default: %(default)s)")
+    parser.add_argument("--compare", action="store_true", help="show the top 3 for every mode side by side")
+    parser.add_argument("--list-modes", action="store_true", help="describe the available modes and exit")
+    args = parser.parse_args()
+
+    if args.list_modes:
+        for mode in SCORING_MODES.values():
+            print(f"{mode.name:15} genre={mode.genre} mood={mode.mood} energy={mode.energy} "
+                  f"acoustic={mode.acoustic}  - {mode.description}")
+        return
+
     songs = load_songs("data/songs.csv")
     print(f"\nLoaded songs: {len(songs)}\n")
 
     for name, prefs in {**PROFILES, **EDGE_CASES, **STRETCH_PROFILES}.items():
-        show(name, prefs, songs)
+        if args.compare:
+            compare_modes(name, prefs, songs)
+        else:
+            show(name, prefs, songs, mode=args.mode)
 
 
 if __name__ == "__main__":
