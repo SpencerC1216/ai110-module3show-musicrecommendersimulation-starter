@@ -18,8 +18,14 @@ Describe what your recommender is designed to do and who it is for.
 Prompts:  
 
 - What kind of recommendations does it generate  
+
+The intended use is that this recommendations algorithm suggest 5 differents after apply different attributes of a song to find similar ones
+
 - What assumptions does it make about the user  
+
+
 - Is this for real users or classroom exploration  
+Classroom exploration
 
 ---
 
@@ -82,9 +88,16 @@ Where does your system seem to work well
 
 Prompts:  
 
-- User types for which it gives reasonable results  
+- User types for which it gives reasonable results 
+I feel since the songs are some what reflective of my taste there is quite a large profile of hip-hop/rnb and jazz. 
+
 - Any patterns you think your scoring captures correctly  
+
+I think it does certain aspects of the getting a genre together well like jazz since it's unique to other songs
+
 - Cases where the recommendations matched your intuition  
+
+This also had 19 tests.
 
 ---
 
@@ -94,10 +107,8 @@ Where the system struggles or behaves unfairly.
 
 Prompts:  
 
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+I think this system limitations include the tempo, vlance and danceability that aren't used
+Another limitation/bias  would be underrepresented genres in the data table. I think 10 of the genres either have 1 or 2 songs
 
 ---
 
@@ -108,11 +119,16 @@ How you checked whether the recommender behaved as expected.
 Prompts:  
 
 - Which user profiles you tested  
+The main profiles I tested 
 - What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
 
-No need for numeric metrics unless you created some.
+- What surprised you  
+What surprised me was the crossdip into genres 
+
+- Any simple tests or comparisons you ran  
+I had comparisons test with different sliders that would adjust the scoring of th recommender and saw how different the output would be
+
+
 
 ---
 
@@ -123,9 +139,12 @@ Ideas for how you would improve the model next.
 Prompts:  
 
 - Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+
+I think addiational features or preferences would somehow get the lyrics linked to songs to have songs that have similar lyrical content
+Also another feature could be a warning sign for if nothing scores well for a certain user
+Maybe showing an explicit song has a clean version
+
+
 
 ---
 
@@ -136,5 +155,13 @@ A few sentences about your experience.
 Prompts:  
 
 - What you learned about recommender systems  
+
+The main things I learned about the recommender systems is the the dataset is very important tot he process of a recommender. I feel like
+expanding it more will help in the long run. I think also I learned would be how to basically 
+
 - Something unexpected or interesting you discovered  
+I like the idea of penalties or limiters to add to jsut add other way to adjust the dataset.
+
 - How this changed the way you think about music recommendation apps  
+I can see how complex this could be for certain apps that can add lyrics, likely biogrpahical text about the artist, record labels, credits
+I'm looking at my spotify mix currently and I can only image what they threw into the algorithm to have a location based mix.
